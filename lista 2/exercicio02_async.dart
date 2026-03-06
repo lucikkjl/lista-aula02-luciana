@@ -11,6 +11,7 @@ void carregarDados() async {
     print('Usuário: $nome');
   } catch (erro) {
     print('Erro: $erro');
+    throw Exception('Erro ao carregar dados');
   }
 }
 void main() {

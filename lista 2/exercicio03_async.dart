@@ -10,35 +10,33 @@ Future<String> autenticar() {
   );
 }
 
-Future<String> buscarPerfil() {
+Future<Map<String, dynamic>> buscarPerfil(String token) {
   return Future.delayed(
     Duration(seconds: 1),
-    () => 'dadosDoUsuario',
+    () => {"id": "user123", "nome": "Luciana"}
   );
 }
 
-Future<String> buscarPedidos() {
+Future<List<String>> buscarPedidos(String userId) {
   return Future.delayed(
     Duration(seconds: 1),
-    () => 'token123',
+    () => ["pedido1", "pedido2", "pedido3"],
   );
 }
 
-
-
-void main() {
-  buscarUsuario()
-      .then((nome) {
-        print('Usuário: $nome');
-      })
-      .catchError((erro) {
-        print('Erro: $erro');
-      })
-      .whenComplete(() {
-        print('Finalizado!');
-      });
+void main() async {
+  try {
+    final token = await autenticar();
+    print('Autenticar: $token');
+    
+    final perfil = await buscarPerfil(token);
+    print('Perfil: $perfil');
+    
+    final pedidos = await buscarPedidos(perfil['id']);
+    print('Pedidos: $pedidos');
+  } catch (erro) {
+    print('Erro: $erro');
+  } finally {
+    print('Finalizado!');
+  }
 }
-
-final token = await autenticar();
-final perfil = await buscarPerfil(token);
-final pedidos = await buscarPedidos(perfil['id']);
